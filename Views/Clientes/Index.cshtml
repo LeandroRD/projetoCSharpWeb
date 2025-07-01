@@ -1,0 +1,45 @@
+@model IEnumerable<ProjetoCSharpWeb.Models.Cliente>
+@{
+    ViewData["Title"] = "Clientes";
+}
+<h1 class="text-center my-4">Clientes</h1>
+<a asp-action="Create" class="btn btn-success mb-3">Novo Cliente</a>
+@if (TempData["success"] != null)
+{
+    <div id="success-alert" class="alert alert-success text-center">@TempData["success"]</div>
+    <script>
+        setTimeout(function() {
+            var alert = document.getElementById('success-alert');
+            if(alert) {
+                alert.style.transition = 'opacity 0.7s';
+                alert.style.opacity = '0';
+                setTimeout(function() { alert.remove(); }, 700);
+            }
+        }, 2000);
+    </script>
+}
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.Email</td>
+                <td>@item.Telefone</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Index" asp-controller="Home" class="btn btn-secondary mt-2">Voltar</a>

@@ -1,0 +1,36 @@
+/* Responsividade customizada para tabelas, formulários e grids */
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+@media (max-width: 767.98px) {
+    .container, .container-fluid {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .form-group label, .form-group input, .form-group select, .form-group textarea {
+        font-size: 1rem;
+    }
+    .btn {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    .navbar-nav {
+        flex-direction: column;
+    }
+    .table {
+        font-size: 0.95rem;
+    }
+}
+
+/* Ajuste para tabelas grandes */
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    word-break: break-word;
+}

@@ -1,0 +1,23 @@
+@model ProjetoCSharpWeb.Models.Cotacao
+@{
+    ViewData["Title"] = "Editar Acompanhamento";
+}
+<h2>Editar Acompanhamento</h2>
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Descricao"></label>
+        <input asp-for="Descricao" class="form-control" />
+        <span asp-validation-for="Descricao" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FornecedorId">Fornecedor</label>
+        <input type="hidden" asp-for="FornecedorId" />
+        <input class="form-control" value="@Model.Fornecedor?.Nome" readonly />
+        <span asp-validation-for="FornecedorId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

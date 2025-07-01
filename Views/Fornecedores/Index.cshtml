@@ -1,0 +1,46 @@
+@model IEnumerable<ProjetoCSharpWeb.Models.Fornecedor>
+@{
+    ViewData["Title"] = "Lista de Fornecedores";
+}
+<h1 class="text-center my-4">Lista de Fornecedores</h1>
+<a class="btn btn-success mb-3" asp-action="Create">Novo Fornecedor</a>
+<table class="table table-bordered table-hover text-center">
+    <thead class="table-primary">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var fornecedor in Model)
+        {
+            <tr>
+                <td>@fornecedor.Id</td>
+                <td>@fornecedor.Nome</td>
+                <td>@fornecedor.Email</td>
+                <td>@fornecedor.Telefone</td>
+                <td>
+                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@fornecedor.Id">Editar</a>
+                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@fornecedor.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (TempData["success"] != null)
+{
+    <div id="success-alert" class="alert alert-success text-center">@TempData["success"]</div>
+    <script>
+        setTimeout(function() {
+            var alert = document.getElementById('success-alert');
+            if(alert) {
+                alert.style.transition = 'opacity 0.7s';
+                alert.style.opacity = '0';
+                setTimeout(function() { alert.remove(); }, 700);
+            }
+        }, 2000);
+    </script>
+}

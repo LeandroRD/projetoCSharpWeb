@@ -1,0 +1,39 @@
+@model ProjetoCSharpWeb.Models.Cotacao
+@{
+    ViewData["Title"] = "Nova Cotação";
+}
+<h2>Nova Cotação</h2>
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Descricao"></label>
+        <input asp-for="Descricao" class="form-control" />
+        <span asp-validation-for="Descricao" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FornecedorId">Fornecedor</label>
+        <select asp-for="FornecedorId" class="form-control" asp-items="ViewBag.FornecedorId"></select>
+        <span asp-validation-for="FornecedorId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Valor"></label>
+        <input class="form-control" step="any" inputmode="decimal" pattern="[0-9]+([\.,][0-9]+)?" id="valorInput" name="ValorVisivel" value="@(Model?.Valor != null ? Model.Valor.ToString().Replace('.', ',') : "")" />
+        <input type="hidden" id="valorHidden" name="Valor" value="@(Model?.Valor != null ? Model.Valor.ToString().Replace(',', '.') : "")" />
+        <span asp-validation-for="Valor" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Confirmar</button>
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.querySelector('form[asp-action="Create"]').addEventListener('submit', function(e) {
+            var input = document.getElementById('valorInput');
+            var hidden = document.getElementById('valorHidden');
+            if(input && hidden) {
+                var valor = input.value.replace(',', '.');
+                hidden.value = valor;
+                input.disabled = true;
+            }
+        });
+    </script>
+}

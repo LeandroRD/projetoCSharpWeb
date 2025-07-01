@@ -1,0 +1,21 @@
+@model ProjetoCSharpWeb.Models.Cliente
+@{
+    ViewData["Title"] = "Excluir Cliente";
+}
+<h1 class="text-center my-4">Excluir Cliente</h1>
+<div class="alert alert-danger">Tem certeza que deseja excluir este cliente?</div>
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Nome</dt>
+        <dd class="col-sm-9">@Model.Nome</dd>
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+        <dt class="col-sm-3">Telefone</dt>
+        <dd class="col-sm-9">@Model.Telefone</dd>
+    </dl>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

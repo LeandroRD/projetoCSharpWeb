@@ -1,0 +1,27 @@
+@model IEnumerable<ProjetoCSharpWeb.Models.Cotacao>
+@{
+    ViewData["Title"] = "Acompanhamento";
+    string sortOrder = Context.Request.Query["sortOrder"];
+}
+<h2>Acompanhamento</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th><a asp-action="Index" asp-route-sortOrder="@(sortOrder == "descricao" ? "descricao_desc" : "descricao")">Descrição</a></th>
+            <th><a asp-action="Index" asp-route-sortOrder="@(sortOrder == "fornecedor" ? "fornecedor_desc" : "fornecedor")">Fornecedor</a></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Descricao</td>
+        <td>@item.Fornecedor?.Nome</td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

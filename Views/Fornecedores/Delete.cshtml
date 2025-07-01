@@ -1,0 +1,11 @@
+@model ProjetoCSharpWeb.Models.Fornecedor
+@{
+    ViewData["Title"] = "Excluir Fornecedor";
+}
+<h1 class="text-center my-4">Excluir Fornecedor</h1>
+<div class="alert alert-danger text-center">Tem certeza que deseja excluir o fornecedor <b>@Model.Nome</b>?</div>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
+</form>

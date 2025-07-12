@@ -9,6 +9,14 @@
 			"problemMatcher": [
 				"$msCompile"
 			]
+		},
+		{
+			"type": "shell",
+			"label": "run",
+			"command": "dotnet run",
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
 		}
 	]
 }

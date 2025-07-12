@@ -29,6 +29,7 @@
             <th><a asp-action="Index" asp-route-sortOrder="@(sortOrder == "fornecedor" ? "fornecedor_desc" : "fornecedor")">Fornecedor</a></th>
             <th><a asp-action="Index" asp-route-sortOrder="@(sortOrder == "valor" ? "valor_desc" : "valor")">Valor</a></th>
             <th><a asp-action="Index" asp-route-sortOrder="@(sortOrder == "aprovacao" ? "aprovacao_desc" : "aprovacao")">Aprovação</a></th>
+            <th>PDF</th>
             <th></th>
         </tr>
     </thead>
@@ -40,6 +41,11 @@
         <td>@item.Fornecedor?.Nome</td>
         <td>@item.Valor.ToString("C")</td>
         <td>@(item.Aprovacao == 1 ? "Aprovado" : item.Aprovacao == 2 ? "Não Aprovado" : "Pendente")</td>
+        <td>
+            <a asp-action="PDF" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                <i class="fas fa-file-pdf"></i> PDF
+            </a>
+        </td>
         <td>
             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detalhes</a>
             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>

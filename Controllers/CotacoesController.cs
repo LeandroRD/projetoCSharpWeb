@@ -169,6 +169,15 @@ namespace ProjetoCSharpWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Cotacoes/PDF/5
+        public async Task<IActionResult> PDF(int? id)
+        {
+            if (id == null) return NotFound();
+            var cotacao = await _context.Cotacoes.Include(c => c.Fornecedor).FirstOrDefaultAsync(m => m.Id == id);
+            if (cotacao == null) return NotFound();
+            return View(cotacao);
+        }
+
         // GET: Cotacoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {

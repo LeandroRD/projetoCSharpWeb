@@ -91,19 +91,23 @@
 
 <script>
     function gerarPDF() {
-        document.getElementById('pdf-result').style.display = 'block';
-        // Aqui você pode implementar a lógica para gerar o PDF
-        console.log('Gerando PDF para cotação ID: @Model.Id');
+        // Redirecionar para o método que gera o PDF
+        window.location.href = '@Url.Action("GerarPDF", "Cotacoes", new { id = Model.Id })';
     }
 
     function visualizarPDF() {
-        alert('Funcionalidade de visualização será implementada em breve!');
-        // Aqui você pode implementar a lógica para visualizar o PDF
+        // Abrir PDF em nova aba
+        window.open('@Url.Action("GerarPDF", "Cotacoes", new { id = Model.Id })', '_blank');
     }
 
     function baixarPDF() {
-        alert('Funcionalidade de download será implementada em breve!');
-        // Aqui você pode implementar a lógica para baixar o PDF
+        // Criar link temporário para download
+        var link = document.createElement('a');
+        link.href = '@Url.Action("GerarPDF", "Cotacoes", new { id = Model.Id })';
+        link.download = 'Cotacao_@(Model.Id).pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 </script>
 

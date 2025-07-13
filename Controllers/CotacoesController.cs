@@ -5,6 +5,10 @@ using ProjetoCSharpWeb.Data;
 using ProjetoCSharpWeb.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 
 namespace ProjetoCSharpWeb.Controllers
 {
@@ -176,6 +180,55 @@ namespace ProjetoCSharpWeb.Controllers
             var cotacao = await _context.Cotacoes.Include(c => c.Fornecedor).FirstOrDefaultAsync(m => m.Id == id);
             if (cotacao == null) return NotFound();
             return View(cotacao);
+        }
+
+        // GET: Cotacoes/GerarPDF/5
+        public async Task<IActionResult> GerarPDF(int? id)
+        {
+            if (id == null) return NotFound();
+            var cotacao = await _context.Cotacoes.Include(c => c.Fornecedor).FirstOrDefaultAsync(m => m.Id == id);
+            if (cotacao == null) return NotFound();
+
+            using var stream = new MemoryStream();
+            var writer = new PdfWriter(stream);
+            var pdf = new PdfDocument(writer);
+            var document = new Document(pdf);
+
+            // Título
+            var titulo = new Paragraph($"Cotação #{cotacao.Id}")
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(20);
+            document.Add(titulo);
+
+            var dataGeracao = new Paragraph($"Documento gerado em {DateTime.Now:dd/MM/yyyy HH:mm}")
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(10);
+            document.Add(dataGeracao);
+
+            document.Add(new Paragraph("\n"));
+
+            // Informações da cotação
+            var cabecalho = new Paragraph("INFORMAÇÕES DA COTAÇÃO")
+                .SetFontSize(14);
+            document.Add(cabecalho);
+
+            document.Add(new Paragraph($"Descrição: {cotacao.Descricao}"));
+            document.Add(new Paragraph($"Fornecedor: {cotacao.Fornecedor?.Nome ?? "N/A"}"));
+            document.Add(new Paragraph($"Valor: {cotacao.Valor:C}"));
+            
+            var statusText = cotacao.Aprovacao == 1 ? "Aprovado" : 
+                           cotacao.Aprovacao == 2 ? "Não Aprovado" : "Pendente";
+            document.Add(new Paragraph($"Status de Aprovação: {statusText}"));
+
+            document.Add(new Paragraph("\n"));
+            var rodape = new Paragraph("Sistema de Cotações - Gerado automaticamente")
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetFontSize(8);
+            document.Add(rodape);
+
+            document.Close();
+
+            return File(stream.ToArray(), "application/pdf", $"Cotacao_{cotacao.Id}.pdf");
         }
 
         // GET: Cotacoes/Details/5
